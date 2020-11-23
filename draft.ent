@@ -1,0 +1,48 @@
+Singleton(GameManager) {
+  Int(result)
+}
+
+GameManager.Func(Result) {
+  Return(result)
+}
+
+Component(MyInt).Type(Int)
+
+Component(Transform) {
+  Int(x)
+  Int(y)
+}
+
+Transform.Func(Init).Args(Int(x), Int(y_demo)) {
+  Assign(y).Value(y_demo)
+}
+
+Func(Start).Args(Int init) {
+}
+
+/* Looping over systems */
+System(MoveSystem).Entities(Transform) {
+}
+
+Event(TransformXEvent) {
+}
+
+World(MyWorld) {
+  MoveSystem
+}
+
+Func(Main) {
+  Array(Int, x)
+  MyWorld.CreateEntity(Transform.Init(0, 0)).Store(z)
+
+  z.Get(Transform).OnChange(TransformXEvent)
+
+  MyWorld.CreateEntity(Transform)
+
+  LoopTimes(20).Call(Start)
+
+  Int(0).Store(bob)
+  Int(20).Add(90).Mult(200).Store(bob)
+
+  String("EntityOS").Split(" ").Store(bb)
+}
