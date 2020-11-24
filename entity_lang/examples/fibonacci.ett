@@ -1,0 +1,18 @@
+Module(Main)
+
+Import(Log)
+
+
+Func(Fib).Args(Int n) {
+  Int(0, 1).StoreIn(firstNum, secondNum)
+  LoopTimes(n.Sub(1)) {
+    (secondNum, firstNum.Add(secondNum)).StoreIn(firstNum, secondNum)
+  }
+
+  Log.Println(firstNum)
+}
+
+
+Func(Main) {
+  Fib(0)
+}

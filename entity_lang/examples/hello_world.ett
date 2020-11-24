@@ -1,0 +1,8 @@
+Module(Main)
+
+Import(Log)
+
+
+Func(Main) {
+  Log.Println("Hello World")
+}

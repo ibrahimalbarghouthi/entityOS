@@ -1,0 +1,54 @@
+Module(Main)
+
+Import(Log)
+
+Component(Node) {
+  Int(data)
+  Node(next)
+}
+
+Func(Push).Args(Node head, Int data) {
+  Node(data, head).StoreIn(newNode)
+  return newNode
+}.Return(Node)
+
+Func(Append).Args(Node head, Int newData) {
+  Node(data).StoreIn(newNode)
+
+  Empty(head).Then {
+    return newNode
+  }
+
+  head.StoreIn(last)
+
+  While(Not(Empty(last.next))) {
+    last.next.StoreIn(last)
+  }
+
+  newNode.StoreIn(last.next)
+
+  return head
+
+}.Return(Node)
+
+Func(InsertAfter).Args(Node prevNode, Int newData) {
+  Empty(prevNode).Then {
+    Log.Fatal("Empty node cannot be previous node")
+  }
+
+  Node(newData, prevNode.next).StoreIn(newNode)
+
+  newNode.StoreIn(prevNode.next)
+
+  return prevNode
+}.Return(Node)
+
+Func(Main) {
+  Node(~).StoreIn(head)
+
+  Append(head, 1).StoreIn(head)
+
+  Push(head, 7).StoreIn(head)
+
+  InsertAfter(head.next, 10).StoreIn(head.next)
+}
