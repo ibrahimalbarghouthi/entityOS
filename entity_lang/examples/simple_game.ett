@@ -1,0 +1,33 @@
+Module(Main)
+
+Import(Time, Renderer, Colors, Simulate, Space)
+
+Simulate.System(MoveSystem).Entities(Space.Transform t) {
+  Inc(t.x).StoreIn(t.x)
+  Inc!(t.y)
+}
+
+Simulate.World(MyWorld) {
+  MoveSystem
+  Renderer.RendererSystem
+}.Settings {
+  SetFps(60)
+  SetTimeOut(Time.Minutes(20)) // Or SetTimeOut(~) for infinity
+}
+
+Simulate.Camera(MainCamera) {
+  MyWorld
+}.Settings {
+  SetMode(Simulate.Camera.Orthographic)
+  SetPosition(Space.Transform(0, 0))
+  SetRotation(Space.Quaternion(0, 0, 0, 0))
+}
+
+
+Func(Main) {
+  LoopTimes(10) {
+    MyWorld.CreateEntity(Space.Transform(0, 0), Renderer.Rect(10, 10, Colors.White))
+  }
+
+  Simulate.Run(MainCamera)
+}
